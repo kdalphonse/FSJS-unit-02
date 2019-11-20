@@ -41,23 +41,9 @@ function showPage(student_list, page) {
    const start = (page - 1) * items_per_page
    let end = page * items_per_page - 1
    
-   if (end > student_list.length) {
-      end = student_list.length;
-   }
-
-   const ul = document.querySelector('.student-list');
-   
-   const new_ul = document.createElement('ul');
-   new_ul.className = 'student-list';
-
-   const page_div = document.querySelector('.page');
-   page_div.insertBefore(new_ul, ul);
-   page_div.removeChild(ul);
-
    for( i = 0; i < student_list.length; i++) {
-      if (i >= start && i <= end) {
-         new_ul.appendChild(student_list[i]);
-      }
+      const show = i >= start && i <= end;
+      student_list[i].style.display = show ? '' : 'none';
    }   
 }
 
