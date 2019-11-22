@@ -7,3 +7,4 @@ The objective of this project was to add pagination to a web page that has a lis
 
 By using Unobtrusive JavaScript (and Progressive Enhancement in particular), the page should 'work' with or without javascript enabled.
 
+I am shooting for 'Exceeds Excpectations' .
