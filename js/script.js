@@ -106,22 +106,25 @@ const appendPageLinks = (student_list) => {
 
 function appendSearch() {
 
-   // search input/prompt
-   const input = document.createElement('input');
-   input.placeholder = 'Search for students...';
+    // search input/prompt
+    const input = document.createElement('input');
+    input.placeholder = 'Search for students...';
 
-   // search button
-   const button = document.createElement('button');
-   button.textContent = 'Search';
-   button.addEventListener('click', (event) => { 
-      const filterValue = input.value;
-      let display_list = all_students;
-      if (filterValue !== '') {
-         display_list = filterList(all_students, filterValue);
-      }
-      appendPageLinks(display_list);
-      showPage(display_list, 1);
-   });
+    // search button
+    const button = document.createElement('button');
+    button.textContent = 'Search';
+    button.addEventListener('click', applyFilter);
+    input.addEventListener('keyup', applyFilter);
+
+    function applyFilter() {
+        const filterValue = input.value;
+        let display_list = all_students;
+        if (filterValue !== '') {
+            display_list = filterList(all_students, filterValue);
+        }
+        appendPageLinks(display_list);
+        showPage(display_list, 1);
+    }
 
    // create a div to hold the input and button
    const searchDiv = document.createElement('div');
@@ -141,7 +144,17 @@ function appendSearch() {
 ***/
 function showHideNoneFound(student_list) {
    const page = document.querySelector('.page');
-   if (student_list.length <= 0) {
+
+   const no_results_div = page.querySelector('.js_NoneFound');
+   if (no_results_div !== null && no_results_div !== undefined) {   
+      // The "No results" message is currently displayed. 
+      // Remove the message if there are now results (otherwise just leave it)
+      if (student_list.length > 0) {
+         page.removeChild(no_results_div);
+      }
+   }
+   else if (student_list.length <= 0) {
+      // The "No results" message is not currenlty displayed, but we have no results.  Display it
       const div = document.createElement('div');
       div.className = 'js_NoneFound';
       const header = document.createElement('h3');
@@ -149,12 +162,6 @@ function showHideNoneFound(student_list) {
 
       div.appendChild(header);
       page.appendChild(div);
-   }
-   else {
-      const div = page.querySelector('.js_NoneFound');
-      if (div !== null && div !== undefined) {
-         page.removeChild(div);
-      }
    }
 }
 
